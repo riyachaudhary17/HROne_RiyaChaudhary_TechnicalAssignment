@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attendance Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Employee Attendance & Analytics</h1>
+        <p>FastAPI + MongoDB dashboard</p>
+      </header>
+
+      <div class="status-bar">
+        <button id="healthBtn" class="primary">Check API Health</button>
+        <a href="http://127.0.0.1:8000/docs" target="_blank" rel="noreferrer">Open Swagger UI</a>
+      </div>
+
+      <main class="grid">
+        <section class="panel">
+          <h2>Create Employee</h2>
+          <form id="employeeForm" class="stack">
+            <input name="emp_code" placeholder="emp_code" required />
+            <input name="name" placeholder="name" required />
+            <input name="email" type="email" placeholder="email" required />
+            <input name="department" placeholder="department" required />
+            <input name="shift_start" placeholder="shift_start (HH:MM)" required />
+            <input name="shift_end" placeholder="shift_end (HH:MM)" required />
+            <input name="joined_on" placeholder="joined_on (YYYY-MM-DD)" required />
+            <button type="submit">Create Employee</button>
+          </form>
+        </section>
+
+        <section class="panel">
+          <h2>Employees</h2>
+          <div class="row">
+            <input id="departmentFilter" placeholder="department (optional)" />
+            <button id="listEmployeesBtn">List Employees</button>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Punch In</h2>
+          <form id="punchInForm" class="stack">
+            <input name="emp_code" placeholder="emp_code" required />
+            <input name="punched_at" placeholder="punched_at ms (optional)" />
+            <select name="status">
+              <option value="PRESENT">PRESENT</option>
+              <option value="WFH">WFH</option>
+              <option value="ON_DUTY">ON_DUTY</option>
+            </select>
+            <button type="submit">Punch In</button>
+          </form>
+        </section>
+
+        <section class="panel">
+          <h2>Punch Out</h2>
+          <form id="punchOutForm" class="stack">
+            <input name="emp_code" placeholder="emp_code" required />
+            <input name="punched_at" placeholder="punched_at ms (optional)" />
+            <button type="submit">Punch Out</button>
+          </form>
+        </section>
+
+        <section class="panel wide">
+          <h2>Attendance Lookup</h2>
+          <form id="attendanceForm" class="stack compact-grid">
+            <input name="emp_code" placeholder="emp_code (optional)" />
+            <input name="date_from" placeholder="date_from (YYYY-MM-DD)" />
+            <input name="date_to" placeholder="date_to (YYYY-MM-DD)" />
+            <select name="status">
+              <option value="">Any status</option>
+              <option value="PRESENT">PRESENT</option>
+              <option value="ABSENT">ABSENT</option>
+              <option value="LEAVE">LEAVE</option>
+              <option value="WFH">WFH</option>
+              <option value="ON_DUTY">ON_DUTY</option>
+            </select>
+            <button type="submit">Fetch Attendance</button>
+          </form>
+        </section>
+
+        <section class="panel">
+          <h2>Monthly Employee Metrics</h2>
+          <form id="monthlyForm" class="stack">
+            <input name="emp_code" placeholder="emp_code" required />
+            <input name="month" placeholder="YYYY-MM" required />
+            <button type="submit">Fetch</button>
+          </form>
+        </section>
+
+        <section class="panel">
+          <h2>Department Summary</h2>
+          <form id="summaryForm" class="stack">
+            <input name="month" placeholder="YYYY-MM" required />
+            <input name="department" placeholder="department (optional)" />
+            <button type="submit">Fetch</button>
+          </form>
+        </section>
+
+        <section class="panel">
+          <h2>Late Leaderboard</h2>
+          <form id="leaderboardForm" class="stack">
+            <input name="month" placeholder="YYYY-MM" required />
+            <input name="limit" type="number" min="1" max="50" value="10" />
+            <input name="department" placeholder="department (optional)" />
+            <button type="submit">Fetch</button>
+          </form>
+        </section>
+
+        <section class="panel wide">
+          <h2>Department Trend</h2>
+          <form id="trendForm" class="stack compact-grid">
+            <input name="department" placeholder="department" required />
+            <input name="from" placeholder="from (YYYY-MM-DD)" required />
+            <input name="to" placeholder="to (YYYY-MM-DD)" required />
+            <button type="submit">Fetch Trend</button>
+          </form>
+        </section>
+      </main>
+
+      <section class="panel output-panel">
+        <h2>Response</h2>
+        <pre id="output">{ "status": "ready" }</pre>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
